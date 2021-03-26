@@ -33,7 +33,7 @@ const ReactTable = () => {
       <ComponentHeader
         title='Inventory'
         description='Lorem ipsum inventory for EZ-Biz'
-        refUrl='https://github.com/tannerlinsley/react-table/'
+        refUrl='/'
       />
 
       <GridContainer>
@@ -45,7 +45,7 @@ const ReactTable = () => {
           />
         </Grid>
         <Button color='primary'>Update Inventory</Button>
-        <Button href='../ecommerce/invoice-2' color='primary'>Record a Sale</Button>
+        <Button href='../mui/inputs/text-fields' color='primary'>Record a Sale</Button>
       </GridContainer>
     </>
   );

@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 import {createRoutes} from '../@crema/utility/Utils';
 import {samplePagesConfig} from './sample';
 import {errorPagesConfigs} from './errorPages';
+import {muiComponentConfigs} from './muiComponents';
 import {dashBoardConfigs} from './dashboard';
 import {ecommerceConfig} from './ecommerce';
 import {authRouteConfig} from './auth';
@@ -21,6 +22,7 @@ const routeConfigs = [
   ...extraPagesConfigs,
   ...thirdPartyConfigs,
   ...appsConfig,
+  ...muiComponentConfigs,
 ];
 
 const routes = [

@@ -176,7 +176,7 @@ const SignupJwtAuth = (props) => {
                 </Grid>
               </GridContainer>
 
-              <Box
+              {/* <Box
                 mb={{xs: 3, xl: 4}}
                 display='flex'
                 alignItems='center'
@@ -198,7 +198,7 @@ const SignupJwtAuth = (props) => {
                   className={classes.pointer}>
                   <IntlMessages id='common.termConditions' />
                 </Box>
-              </Box>
+              </Box> */}
 
               <Box
                 mb={6}
