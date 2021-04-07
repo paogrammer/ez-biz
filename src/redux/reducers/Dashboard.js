@@ -7,6 +7,7 @@ import {
   GET_HC_DATA,
   GET_METRICS_DATA,
   GET_WIDGETS_DATA,
+  DASHBOARD_ACTION_TYPES,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   widgetsData: null,
   healthCare: null,
   academyData: null,
+  revenueResults: null,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -68,6 +70,12 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         healthCare: action.payload,
+      };
+
+    case DASHBOARD_ACTION_TYPES.IS_FETCHED:
+      return {
+        ...state,
+        ...action.dashboard,
       };
 
     default:

@@ -15,7 +15,7 @@ export const ecommerceConfig = [
     auth: authRole.user,
     routes: [
       {
-        path: '/ecommerce/invoice-2',
+        path: '/ecommerce/invoice-2/:orderID',
         component: React.lazy(() => import('./Invoice2')),
       },
     ],

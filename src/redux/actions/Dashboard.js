@@ -1,5 +1,6 @@
 import React from 'react';
 import Api from '../../@crema/services/ApiConfig';
+import jwtAxios from '@crema/services/auth/jwt-auth/jwt-api';
 import {
   FETCH_ERROR,
   FETCH_START,
@@ -12,6 +13,7 @@ import {
   GET_HC_DATA,
   GET_METRICS_DATA,
   GET_WIDGETS_DATA,
+  DASHBOARD_ACTION_TYPES,
 } from '../../shared/constants/ActionTypes';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
@@ -181,4 +183,18 @@ export const onGetWidgetsData = () => {
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
   };
+};
+
+export const getDashboardAnalyticsData = () => async (dispatch) => {
+  try {
+    dispatch({type: DASHBOARD_ACTION_TYPES.IS_FETCHING});
+    const {data} = await jwtAxios.get('/dashboard');
+
+    dispatch({
+      type: DASHBOARD_ACTION_TYPES.IS_FETCHED,
+      dashboard: data.dashboard,
+    });
+  } catch (error) {
+    dispatch({type: DASHBOARD_ACTION_TYPES.IS_ERROR, error: error.message});
+  }
 };

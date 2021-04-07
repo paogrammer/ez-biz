@@ -12,4 +12,5 @@ export * from './Setting';
 export * from './JWTAuth';
 export * from './Wall';
 export * from './Ecommerce';
-
+export * from './Inventory';
+export * from './Order';

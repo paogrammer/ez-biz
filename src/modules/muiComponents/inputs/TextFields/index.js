@@ -165,8 +165,12 @@ const TextFields = () => {
             source={CustomizationSource}
           />
         </Grid> */}
-      <Button href='../third-party/react-table' color='primary'>Back</Button>
-      <Button href='../../ecommerce/invoice-1' color='primary'>Submit</Button>
+        <Button href='../third-party/react-table' color='primary'>
+          Back
+        </Button>
+        <Button href='../../ecommerce/invoice-1' color='primary'>
+          Submit
+        </Button>
       </GridContainer>
     </>
   );

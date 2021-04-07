@@ -4,7 +4,7 @@ import {useIntl} from 'react-intl';
 import AppSelect from '../../../../@crema/core/AppSelect';
 import OrderTable from './OrderTable';
 
-const RecentOrders = ({recentOrders}) => {
+const RecentOrders = ({recentOrders, openModelHandler}) => {
   const {messages} = useIntl();
   const handleSelectionType = (data) => {
     console.log('data: ', data);
@@ -13,18 +13,22 @@ const RecentOrders = ({recentOrders}) => {
     <AppCard
       contentStyle={{paddingRight: 0, paddingLeft: 0}}
       title={messages['eCommerce.recentOrders']}
-      action={
-        <AppSelect
-          menus={[
-            messages['dashboard.thisWeek'],
-            messages['dashboard.lastWeeks'],
-            messages['dashboard.lastMonth'],
-          ]}
-          defaultValue={messages['dashboard.thisWeek']}
-          onChange={handleSelectionType}
-        />
-      }>
-      <OrderTable orderData={recentOrders} />
+      // action={
+      //   <AppSelect
+      //     menus={[
+      //       messages['dashboard.thisWeek'],
+      //       messages['dashboard.lastWeeks'],
+      //       messages['dashboard.lastMonth'],
+      //     ]}
+      //     defaultValue={messages['dashboard.thisWeek']}
+      //     onChange={handleSelectionType}
+      //   />
+      // }
+    >
+      <OrderTable
+        orderData={recentOrders}
+        openModelHandler={openModelHandler}
+      />
     </AppCard>
   );
 };

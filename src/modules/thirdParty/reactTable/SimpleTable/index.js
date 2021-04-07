@@ -1,48 +1,66 @@
 import React from 'react';
-import {makeData} from '../data/Utils';
+import {connect} from 'react-redux';
 import ReactTable from 'react-table';
+import {Button} from '@material-ui/core';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import {getInventoryData} from 'redux/actions';
 
 class SimpleTable extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      data: makeData(),
-    };
-  }
+  componentDidMount = () => {
+    this.props.getInventoryData();
+  };
+
+  renderEditable = (entry) => {
+    return (
+      <div style={{textAlign: 'center'}}>
+        <Button onClick={this.props.updateHandler(entry)}>
+          <EditOutlinedIcon />
+        </Button>
+      </div>
+    );
+  };
 
   render() {
-    const {data} = this.state;
     return (
       <ReactTable
-        data={data}
+        data={this.props.inventory || []}
         columns={[
           {
             Header: 'Product',
             columns: [
               {
                 Header: 'Item No.',
-                accessor: 'itemNumber',
+                accessor: 'itemNo',
               },
               {
                 Header: 'Item Name',
-                id: 'itemName',
+                accessor: 'itemName',
               },
               {
                 Header: 'Item Description',
-                accessor: 'itemDesc',
+                accessor: 'description',
               },
             ],
           },
           {
             Header: 'Info',
-            columns: [ 
+            columns: [
               {
                 Header: 'Stock Amount',
-                accessor: 'itemStock',
+                accessor: 'stockAmount',
               },
               {
                 Header: 'Price',
-                accessor: 'itemPrice',
+                accessor: 'Price',
+              },
+              {
+                Header: 'Update',
+                // accessor: (a) => {
+                //   console.log('...........a', a);
+                //   return <EditOutlinedIcon />;
+                // },
+                Cell: (tableContent) =>
+                  this.renderEditable(tableContent.original),
               },
             ],
           },
@@ -54,4 +72,14 @@ class SimpleTable extends React.Component {
   }
 }
 
-export default SimpleTable;
+const mapStateToProps = (state) => {
+  return {
+    inventory: state.inventory.data,
+  };
+};
+
+const mapDispatchToProps = {
+  getInventoryData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SimpleTable);

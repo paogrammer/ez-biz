@@ -29,7 +29,7 @@ const TableHeading = (props) => {
       <TableCell>Customer</TableCell>
       <TableCell>Delivery Date</TableCell>
       <TableCell>Price</TableCell>
-      <TableCell>Status</TableCell>
+      {/* <TableCell>Status</TableCell> */}
       <TableCell>Actions</TableCell>
     </TableRow>
   );

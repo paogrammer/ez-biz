@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
   },
 }));
+
 const Invoice2 = (props) => {
   const classes = useStyles(props);
 

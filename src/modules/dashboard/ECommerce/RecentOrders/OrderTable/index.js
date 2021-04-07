@@ -7,7 +7,7 @@ import TableHeading from './TableHeading';
 import TableItem from './TableItem';
 import TableContainer from '@material-ui/core/TableContainer';
 
-const OrderTable = ({orderData}) => {
+const OrderTable = ({orderData, openModelHandler}) => {
   return (
     <TableContainer>
       <Table>
@@ -15,8 +15,12 @@ const OrderTable = ({orderData}) => {
           <TableHeading />
         </TableHead>
         <TableBody>
-          {orderData.map((data) => (
-            <TableItem data={data} key={data.id} />
+          {orderData?.map((data) => (
+            <TableItem
+              data={data}
+              key={data.id}
+              openModelHandler={openModelHandler}
+            />
           ))}
         </TableBody>
       </Table>
