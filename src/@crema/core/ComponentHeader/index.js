@@ -52,7 +52,7 @@ const ComponentHeader = ({title, description, refUrl}) => {
             </Typography>
           ) : null}
         </Box>
-        {refUrl ? (
+        {/* {refUrl ? (
           <Box height={40}>
             <Button
               variant='outlined'
@@ -62,7 +62,7 @@ const ComponentHeader = ({title, description, refUrl}) => {
               Reference <LinkIcon className={classes.linkIcon} />
             </Button>
           </Box>
-        ) : null}
+        ) : null} */}
       </Box>
     </AppAnimate>
   );

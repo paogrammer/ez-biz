@@ -132,6 +132,12 @@ const ReactTable = () => {
         <Button color='primary' onClick={openUpdateSaleRecordHandler}>
           Record a Sale
         </Button>
+        <Button
+          color='primary'
+          href='https://web.lalamove.com/'
+          target='_blank'>
+          Deliver via Lalamove
+        </Button>
       </GridContainer>
     </>
   );

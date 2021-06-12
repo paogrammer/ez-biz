@@ -14,8 +14,8 @@ const useStyle = makeStyles(() => ({
     display: 'flex',
     position: 'relative',
     height: '100vh',
-    backgroundColor: '#f3f4f6',
-    background: `url(/assets/images/auth-background.jpg) no-repeat center center`,
+    backgroundColor: '#000000',
+    // background: `url(/assets/images/auth-background.jpg) no-repeat center center`,
     backgroundSize: 'cover',
 
     '& .scrollbar-container': {

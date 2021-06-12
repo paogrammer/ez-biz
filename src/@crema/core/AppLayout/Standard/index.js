@@ -43,7 +43,7 @@ const StandardLayout = () => {
           </Box>
         </Hidden>
       </Box>
-      <ThemeSetting />
+      {/* <ThemeSetting /> */}
     </Box>
   );
 };

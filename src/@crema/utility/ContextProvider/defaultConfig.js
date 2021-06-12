@@ -17,13 +17,13 @@ const defaultConfig = {
     spacing: 4,
     direction: 'ltr', //ltr, rtl
     palette: {
-      type: ThemeMode.LIGHT,
+      type: ThemeMode.DARK,
       background: {
-        paper: '#FFFFFF',
-        default: '#F4F7FE',
+        paper: '#393D4B',
+        default: '#393D4B',
       },
       primary: {
-        main: '#0A8FDC',
+        main: '#5DD9C0',
         contrastText: '#fff',
       },
       secondary: {
@@ -50,7 +50,7 @@ const defaultConfig = {
         A700: '#616161',
       },
       text: {
-        primary: '#495057',
+        primary: 'rgba(255, 255, 255, 0.87)',
         secondary: '#74788d',
         disabled: '#909098',
         hint: '#aeafb8',
@@ -132,7 +132,7 @@ const defaultConfig = {
     },
   },
   themeStyle: ThemeStyle.STANDARD,
-  themeMode: ThemeMode.SEMI_DARK,
+  themeMode: ThemeMode.DARK,
   navStyle: NavStyle.STANDARD,
   layoutType: LayoutType.FULL_WIDTH,
   footerType: FooterType.FLUID,

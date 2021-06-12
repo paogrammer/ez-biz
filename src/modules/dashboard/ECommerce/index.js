@@ -121,9 +121,9 @@ const ECommerce = () => {
                   openModelHandler={openUpdateSaleRecordHandler}
                 />
               </Grid>
-              <Grid item xs={12} md={3}>
+              {/* <Grid item xs={12} md={3}>
                 <Revenue />
-              </Grid>
+              </Grid> */}
 
               {/* <Grid item xs={12} md={6}>
                 <MarketingCampaign
