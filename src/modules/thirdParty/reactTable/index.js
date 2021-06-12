@@ -93,18 +93,14 @@ const ReactTable = () => {
 
   return (
     <>
-      <ComponentHeader
-        title='Inventory'
-        description='Lorem ipsum inventory for EZ-Biz'
-        refUrl='/'
-      />
+      <ComponentHeader title='Inventory' description='' refUrl='/' />
 
       <GridContainer>
         <Grid item xs={12}>
           <ComponentCard
-            title='Simple Table'
+            title='Item List'
             component={() => <SimpleTable updateHandler={updateTheInventory} />}
-            source={SimpleTableSource}
+            // source={SimpleTableSource}
           />
         </Grid>
 

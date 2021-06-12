@@ -38,7 +38,7 @@ export const thirdPartyConfigs = [
     auth: authRole.user,
     routes: [
       {
-        path: '/third-party/react-table',
+        path: '/inventory',
         component: React.lazy(() => import('./reactTable')),
       },
     ],

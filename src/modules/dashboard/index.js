@@ -15,7 +15,7 @@ export const dashBoardConfigs = [
     auth: authRole.user,
     routes: [
       {
-        path: '/dashboards/e-commerce',
+        path: '/dashboard',
         component: React.lazy(() => import('./ECommerce')),
       },
     ],

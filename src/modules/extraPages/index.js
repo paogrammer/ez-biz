@@ -15,7 +15,7 @@ export const extraPagesConfigs = [
     auth: authRole.user,
     routes: [
       {
-        path: '/extra-pages/knowledge-base',
+        path: '/helpdesk',
         component: React.lazy(() => import('./KnowledgeBase')),
       },
     ],

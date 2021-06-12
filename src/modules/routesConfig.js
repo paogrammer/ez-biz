@@ -4,21 +4,21 @@ const routesConfig = [
     title: 'Dashboard',
     messageId: 'sidebar.one',
     type: 'item',
-    url: '/dashboards/e-commerce',
+    url: '/dashboard',
   },
   {
     id: 'inventory',
     title: 'Inventory',
     messageId: 'sidebar.two',
     type: 'item',
-    url: '/third-party/react-table',
+    url: '/inventory',
   },
   {
     id: 'helpdesk',
     title: 'Helpdesk',
     messageId: 'sidebar.three',
     type: 'item',
-    url: '/extra-pages/knowledge-base',
+    url: '/helpdesk',
   },
 ];
 export default routesConfig;

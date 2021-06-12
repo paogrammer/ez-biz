@@ -110,7 +110,7 @@ const SigninJwtAuth = (props) => {
           validateOnChange={true}
           initialValues={{
             email: 'ezbiz.demo@gmail.com',
-            password: 'Pass@1!@all',
+            password: '123123',
           }}
           validationSchema={validationSchema}
           onSubmit={(data, {setSubmitting}) => {
