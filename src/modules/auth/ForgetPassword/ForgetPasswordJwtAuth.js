@@ -110,11 +110,11 @@ const ForgetPasswordJwtAuth = () => {
   return (
     <Box flex={1} display='flex' flexDirection='column' justifyContent='center'>
       <Box mb={{xs: 6, md: 8, xl: 18}} textAlign='center'>
-        <img
+        {/* <img
           className={classes.image}
           src={'/assets/images/logo-white-with-name.png'}
           alt='crema-logo'
-        />
+        /> */}
       </Box>
 
       <Box
