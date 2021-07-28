@@ -29,7 +29,7 @@ const TableHeading = (props) => {
   return (
     <TableRow className={classes.tableRowRoot}>
       <TableCell align='left' className={classes.tableCellRoot}>
-        Product
+        Product - Qty
       </TableCell>
       <TableCell align='left' className={classes.tableCellRoot}>
         Unit Price

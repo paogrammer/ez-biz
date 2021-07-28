@@ -5,10 +5,11 @@ import ecommerceData, {
   recentOrders,
 } from '../../db/ecommerce/ecommerceData';
 import {multiPropsFilter} from '../../../utility/Utils';
+import {getInventoryData} from 'redux/actions';
 
 mock.onGet('/api/ecommerce/list').reply((request) => {
   const {filterData} = request.params;
-  const data = multiPropsFilter(ecommerceData, filterData);
+  const data = multiPropsFilter(getInventoryData, filterData);
   return [200, data];
 });
 
@@ -16,11 +17,11 @@ mock.onGet('/api/ecommerce/get').reply((request) => {
   const {id} = request.params;
   console.log('id: ', id);
   if (id >= 1 && id <= 12) {
-    const data = ecommerceData.filter((item) => +item.id === +id);
+    const data = getInventoryData.filter((item) => +item.id === +id);
     console.log('data', data);
     if (data.length > 0) return [200, data[0]];
   }
-  return [200, ecommerceData[0]];
+  return [200, getInventoryData[0]];
 });
 
 mock.onGet('/api/ecommerce/orders').reply((request) => {

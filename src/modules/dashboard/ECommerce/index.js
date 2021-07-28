@@ -23,6 +23,7 @@ import Browser from './Browser';
 import SiteVisitors from './SiteVisitors';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import RecordSale from 'modules/common/RecordSale';
+import {onGetAnalyticsData} from 'redux/actions';
 
 const revenueResults = [
   {
@@ -36,6 +37,18 @@ const revenueResults = [
     icon: '/assets/images/dashboard/1_revenue_icon.png',
     id: 2,
     type: 'Total Revenue',
+  },
+  {
+    bgColor: '#49BD65',
+    icon: '/assets/images/dashboard/1_monthly_sales.png',
+    id: 3,
+    type: 'Sales Last 7 Days',
+  },
+  {
+    bgColor: '#ff5a5a',
+    icon: '/assets/images/dashboard/1_monthly_sales.png',
+    id: 4,
+    type: 'Sales Last 30 Days',
   },
 ];
 
@@ -89,6 +102,16 @@ const ECommerce = () => {
                   state={{...revenueResults[1], value: revenue || 0}}
                 />
               </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <SalesState
+                  state={{...revenueResults[2], value: revenue || 0}}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <SalesState
+                  state={{...revenueResults[3], value: revenue || 0}}
+                />
+              </Grid>
 
               {/* {ecommerceData.salesState.map((state, index) => (
                 <Grid item xs={12} sm={6} md={3} key={index}>
@@ -121,9 +144,9 @@ const ECommerce = () => {
                   openModelHandler={openUpdateSaleRecordHandler}
                 />
               </Grid>
-              {/* <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={3}>
                 <Revenue />
-              </Grid> */}
+              </Grid>
 
               {/* <Grid item xs={12} md={6}>
                 <MarketingCampaign
@@ -136,12 +159,12 @@ const ECommerce = () => {
 
               {/* <Grid item xs={12} md={6}>
                 <NewCustomers newCustomers={ecommerceData.newCustomers} />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} md={6}>
                 <PopularProducts
                   popularProducts={ecommerceData.popularProducts}
                 />
-              </Grid> */}
+              </Grid>
 
               {/* <Grid item xs={12} md={9}>
                 <SiteVisitors siteVisitorsData={ecommerceData.siteVisitors} />

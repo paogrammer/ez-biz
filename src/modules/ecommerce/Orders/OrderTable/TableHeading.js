@@ -29,13 +29,16 @@ const TableHeading = (props) => {
     <TableRow className={classes.tableRowRoot}>
       <TableCell className={classes.tableCellRoot}>Order ID</TableCell>
       <TableCell align='left' className={classes.tableCellRoot}>
-        Product
+        Product - Qty
       </TableCell>
       <TableCell align='left' className={classes.tableCellRoot}>
         Customer
       </TableCell>
       <TableCell align='left' className={classes.tableCellRoot}>
         Delivery Date
+      </TableCell>
+      <TableCell align='left' className={classes.tableCellRoot}>
+        Purchase Date
       </TableCell>
       <TableCell align='left' className={classes.tableCellRoot}>
         Price

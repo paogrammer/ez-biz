@@ -17,25 +17,35 @@ import {
 } from '../../shared/constants/ActionTypes';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
-export const onGetAnalyticsData = () => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    Api.get('/dashboard/analytics')
-      .then((data) => {
-        if (data.status === 200) {
-          dispatch({type: FETCH_SUCCESS});
-          dispatch({type: GET_ANALYTICS_DATA, payload: data.data});
-        } else {
-          dispatch({
-            type: FETCH_ERROR,
-            payload: <IntlMessages id='message.somethingWentWrong' />,
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: FETCH_ERROR, payload: error.message});
-      });
-  };
+export const onGetAnalyticsData = () => async (dispatch) => {
+  // try {
+  //   dispatch({type: DASHBOARD_ACTION_TYPES.IS_FETCHING});
+  //   const {data} = await jwtAxios.get('/dashboard');
+  //   dispatch({
+  //     type: DASHBOARD_ACTION_TYPES.IS_FETCHED,
+  //     analytics: data.analytics,
+  //   });
+  // } catch (error) {
+  //   dispatch({type: DASHBOARD_ACTION_TYPES.IS_ERROR, error: error.message});
+  // }
+  // return (dispatch) => {
+  //   dispatch({type: FETCH_START});
+  //   Api.get('/dashboard/analytics')
+  //     .then((data) => {
+  //       if (data.status === 200) {
+  //         dispatch({type: FETCH_SUCCESS});
+  //         dispatch({type: GET_ANALYTICS_DATA, payload: data.analytics});
+  //       } else {
+  //         dispatch({
+  //           type: FETCH_ERROR,
+  //           payload: <IntlMessages id='message.somethingWentWrong' />,
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       dispatch({type: FETCH_ERROR, payload: error.message});
+  //     });
+  // };
 };
 
 export const onGetECommerceData = () => {
@@ -188,11 +198,12 @@ export const onGetWidgetsData = () => {
 export const getDashboardAnalyticsData = () => async (dispatch) => {
   try {
     dispatch({type: DASHBOARD_ACTION_TYPES.IS_FETCHING});
-    const {data} = await jwtAxios.get('/dashboard');
+
+    const {data} = await jwtAxios.get('/analytics');
 
     dispatch({
       type: DASHBOARD_ACTION_TYPES.IS_FETCHED,
-      dashboard: data.dashboard,
+      analytics: data.analytics,
     });
   } catch (error) {
     dispatch({type: DASHBOARD_ACTION_TYPES.IS_ERROR, error: error.message});

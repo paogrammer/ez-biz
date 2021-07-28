@@ -13,7 +13,7 @@ const Revenue = () => {
       <Box mb={6} py={5} px={{xl: 10}}>
         <AppCircularProgress
           activeColor='#0A8FDC'
-          value={70}
+          value={80}
           hidePercentage
           centerNode={
             <Box>
@@ -40,7 +40,7 @@ const Revenue = () => {
       <Box display='flex' justifyContent='space-around'>
         <Box>
           <Box fontSize={18} mb={0.5} fontWeight={Fonts.BOLD}>
-            $ 2,000
+            $
           </Box>
           <Box color='text.secondary'>Target</Box>
         </Box>

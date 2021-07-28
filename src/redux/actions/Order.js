@@ -28,9 +28,14 @@ export const addNewOrder = (body) => async (dispatch) => {
       deliveryDate: moment(body.deliveryDate).utc(),
     });
 
+    const {data1} = await jwtAxios.post('/analytics', {
+      ...body,
+    });
+
     dispatch({
       type: ADD_ORDER.IS_FETCHED,
       order: data.order,
+      analytics: data1.analytics,
     });
   } catch (error) {
     dispatch({type: ADD_ORDER.IS_ERROR, error: error.message});

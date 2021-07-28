@@ -47,6 +47,9 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
       error: false,
       value: null,
     },
+    purchaseDate: {
+      error: false,
+    },
     Price: {
       error: false,
       value: '',

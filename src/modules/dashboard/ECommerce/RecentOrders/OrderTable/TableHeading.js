@@ -25,9 +25,10 @@ const TableHeading = (props) => {
   return (
     <TableRow className={classes.tableRowRoot}>
       <TableCell>Order ID</TableCell>
-      <TableCell>Product</TableCell>
+      <TableCell>Product - Qty</TableCell>
       <TableCell>Customer</TableCell>
       <TableCell>Delivery Date</TableCell>
+      <TableCell>Purchase Date</TableCell>
       <TableCell>Price</TableCell>
       {/* <TableCell>Status</TableCell> */}
       <TableCell>Actions</TableCell>

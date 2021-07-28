@@ -40,6 +40,9 @@ const TableItem = ({data, openModelHandler}) => {
         {moment(data.deliveryDate).format('YYYY-MM-DD')}
       </TableCell>
       <TableCell align='left' className={classes.tableCell}>
+        {moment(data.purchaseDate).format('YYYY-MM-DD')}
+      </TableCell>
+      <TableCell align='left' className={classes.tableCell}>
         {data.Price}
       </TableCell>
       {/* <TableCell align='left' className={classes.tableCell}>
