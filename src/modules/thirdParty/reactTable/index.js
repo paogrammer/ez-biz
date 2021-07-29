@@ -29,13 +29,16 @@ import TableFooterSource from '!raw-loader!./TableFooters';
 import SimpleTable from './SimpleTable';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import SimpleTableSource from '!raw-loader!./SimpleTable';
-import {addNewInventory, updateNewInventory, addNewOrder} from 'redux/actions';
+import {
+  addNewInventory,
+  updateNewInventory,
+  addNewOrder,
+  deleteInventory,
+} from 'redux/actions';
 
 const ReactTable = () => {
-  const [
-    isInventoryInventoryModalOpen,
-    setInventoryInventoryModalOpen,
-  ] = useState(false);
+  const [isInventoryInventoryModalOpen, setInventoryInventoryModalOpen] =
+    useState(false);
   const [isRecordASaleModalOpen, setRecordASaleModalOpen] = useState(false);
   const [inventoryObjOnUpdating, setInventoryObjOnUpdating] = useState(null);
   const [saleObjOnUpdating, setSaleObjOnUpdating] = useState(null);
@@ -51,6 +54,11 @@ const ReactTable = () => {
     } else {
       dispatch(addNewInventory(obj));
     }
+    updateInventoryCloseHandler();
+  };
+
+  const submitDeleteInventoryHandler = (obj) => {
+    dispatch(deleteInventory(obj));
     updateInventoryCloseHandler();
   };
 
@@ -110,6 +118,7 @@ const ReactTable = () => {
             onClose={updateInventoryCloseHandler}
             onSubmit={submitUpdateInventoryHandler}
             objOnUpdating={inventoryObjOnUpdating}
+            onDelete={submitDeleteInventoryHandler}
           />
         )}
 

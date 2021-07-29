@@ -1,11 +1,8 @@
 import {INVENTORY_ACTION_TYPES} from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth/jwt-api';
 
-const {
-  GET_INVENTORIES,
-  UPDATE_INVENTORY,
-  ADD_INVENTORY,
-} = INVENTORY_ACTION_TYPES;
+const {GET_INVENTORIES, UPDATE_INVENTORY, ADD_INVENTORY, DELETE_INVENTORY} =
+  INVENTORY_ACTION_TYPES;
 
 export const getInventoryData = () => async (dispatch) => {
   try {
@@ -52,5 +49,25 @@ export const updateNewInventory = (body) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({type: UPDATE_INVENTORY.IS_ERROR, error: error.message});
+  }
+};
+
+export const deleteInventory = (body) => async (dispatch) => {
+  console.log(body, 'body');
+
+  try {
+    dispatch({type: DELETE_INVENTORY.IS_FETCHING});
+
+    const {data} = await jwtAxios.delete(
+      `/inventory?inventoryID=${body._id}`,
+      body,
+    );
+
+    dispatch({
+      type: DELETE_INVENTORY.IS_FETCHED,
+      inventory: data.inventory,
+    });
+  } catch (error) {
+    dispatch({type: DELETE_INVENTORY.IS_ERROR, error: error.message});
   }
 };

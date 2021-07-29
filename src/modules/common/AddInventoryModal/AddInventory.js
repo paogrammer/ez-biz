@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -36,7 +38,9 @@ export default function TransitionsModal({
   onClose,
   isOpen,
   objOnUpdating,
+  onDelete,
 }) {
+  const fileInput = useRef();
   const classes = useStyles();
   const [values, setValues] = React.useState({
     itemNo: {
@@ -60,6 +64,8 @@ export default function TransitionsModal({
       value: '',
     },
   });
+
+  const [image, setImage] = useState(null);
 
   React.useEffect(() => {
     if (objOnUpdating) {
@@ -150,6 +156,16 @@ export default function TransitionsModal({
     }
   };
 
+  const handleUpload = () => {
+    console.log(fileInput.current.files[0]);
+    setImage(fileInput.current.files[0]);
+  };
+
+  const handleDelete = () => {
+    const obj = objValues();
+    onDelete(obj);
+  };
+
   return (
     <Modal
       aria-labelledby='transition-modal-title'
@@ -235,6 +251,19 @@ export default function TransitionsModal({
               variant='outlined'
               required
             />
+            <input
+              accept='image/*'
+              id='contained-button-file'
+              type='file'
+              style={{display: 'none'}}
+              ref={fileInput}
+              onChange={handleUpload}
+            />
+            <label htmlFor='contained-button-file'>
+              <Button variant='contained' color='primary' component='span'>
+                Upload
+              </Button>
+            </label>
           </form>
 
           <Button color='primary' onClick={onClose}>
@@ -242,6 +271,9 @@ export default function TransitionsModal({
           </Button>
           <Button color='primary' onClick={onSubmitHandler}>
             {!objOnUpdating ? 'Submit' : 'Update'}
+          </Button>
+          <Button color='primary' onClick={handleDelete}>
+            Delete
           </Button>
         </div>
       </Fade>

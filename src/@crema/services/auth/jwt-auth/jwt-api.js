@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const jwtAxios = axios.create({
-  baseURL: 'https://ez-biz-api.herokuapp.com/api', //YOUR_API_URL HERE
+  // baseURL: 'https://ez-biz-api.herokuapp.com/api', //YOUR_API_URL HERE
+  baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -6,17 +6,15 @@ const initialState = {
   error: null,
 };
 
-const {
-  GET_INVENTORIES,
-  ADD_INVENTORY,
-  UPDATE_INVENTORY,
-} = INVENTORY_ACTION_TYPES;
+const {GET_INVENTORIES, ADD_INVENTORY, UPDATE_INVENTORY, DELETE_INVENTORY} =
+  INVENTORY_ACTION_TYPES;
 
 const inventoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INVENTORIES.IS_FETCHING:
     case ADD_INVENTORY.IS_FETCHING:
     case UPDATE_INVENTORY.IS_FETCHING:
+    case DELETE_INVENTORY.IS_FETCHING:
       return {
         ...state,
         error: null,
@@ -45,10 +43,17 @@ const inventoryReducer = (state = initialState, action) => {
           item._id === action.inventory._id ? action.inventory : item,
         ),
       };
+    case DELETE_INVENTORY.IS_FETCHED:
+      return {
+        ...state,
+        loading: false,
+        data: state.data.filter((item) => item._id !== action.inventory._id),
+      };
 
     case GET_INVENTORIES.IS_ERROR:
     case ADD_INVENTORY.IS_ERROR:
     case UPDATE_INVENTORY.IS_ERROR:
+    case DELETE_INVENTORY.IS_ERROR:
       return {
         ...state,
         loading: false,
