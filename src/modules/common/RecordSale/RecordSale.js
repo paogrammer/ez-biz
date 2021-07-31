@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {KeyboardDatePicker} from '@material-ui/pickers';
+import Checkbox from '@material-ui/core/Checkbox';
+import {useSelector} from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    width: '80%',
+    width: '98%',
     overflowY: 'scroll',
     maxHeight: '100%',
   },
@@ -33,6 +34,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
+  const {data} = useSelector((state) => state.inventory);
+  const [checked, setChecked] = useState([]);
+
+  const handleCheckChange = (position) => {
+    const updatedCheckedState = checked.map((item, index) =>
+      index === position ? !item : item,
+    );
+
+    console.log(updatedCheckedState, 'updatedCheckedState');
+
+    setChecked(updatedCheckedState);
+
+    // const totalPrice = updatedCheckedState.reduce(
+    //   (sum, currentState, index) => {
+    //     if (currentState === true) {
+    //       return sum + toppings[index].price;
+    //     }
+    //     return sum;
+    //   },
+    //   0
+    // );
+
+    // setTotal(totalPrice);
+  };
+
+  console.log(data, 'data');
   const classes = useStyles();
   const [values, setValues] = React.useState({
     productName: {
@@ -43,9 +70,13 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
       error: false,
       value: '',
     },
-    deliveryDate: {
+    customerNumber: {
       error: false,
-      value: null,
+      value: '',
+    },
+    customerAddress: {
+      error: false,
+      value: '',
     },
     purchaseDate: {
       error: false,
@@ -79,6 +110,12 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
       }
     }
   }, [objOnUpdating]);
+
+  useEffect(() => {
+    console.log(data, 'data');
+
+    setChecked(new Array(data.length).fill(false));
+  }, [data]);
 
   const handleChange = (name) => (event) => {
     setValues({
@@ -175,75 +212,80 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
         <div className={classes.paper}>
           <h1>Record A Sale</h1>
           <form className={classes.container} noValidate autoComplete='off'>
-            <TextField
-              id='outlined-name'
-              label='Product Name'
-              className={classes.textField}
-              value={values.productName.value}
-              error={values.productName.error}
-              onChange={handleChange('productName')}
-              margin='normal'
-              variant='outlined'
-              required
-            />
+            {data.map((inventory, index) => {
+              return (
+                <div key={index}>
+                  <Checkbox
+                    checked={checked[index]}
+                    onChange={() => handleCheckChange(index)}
+                    inputProps={{'aria-label': 'primary checkbox'}}
+                  />
 
-            <TextField
-              id='outlined-name'
-              label='Customer Name'
-              className={classes.textField}
-              value={values.customerName.value}
-              error={values.customerName.error}
-              onChange={handleChange('customerName')}
-              margin='normal'
-              variant='outlined'
-              required
-            />
+                  <TextField
+                    id='outlined-name'
+                    label='Product Name'
+                    className={classes.textField}
+                    value={inventory.itemName}
+                    disabled
+                    onChange={handleChange('productName')}
+                    margin='normal'
+                    variant='outlined'
+                    required
+                  />
 
-            <TextField
-              id='outlined-number'
-              label='Price'
-              value={values.Price.value}
-              error={values.Price.error}
-              onChange={handleChange('Price')}
-              type='number'
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              margin='normal'
-              variant='outlined'
-              required
-            />
+                  <TextField
+                    id='outlined-name'
+                    label='Customer Name'
+                    className={classes.textField}
+                    value={values.customerName.value}
+                    error={values.customerName.error}
+                    onChange={handleChange('customerName')}
+                    margin='normal'
+                    variant='outlined'
+                    required
+                  />
+                  <TextField
+                    id='outlined-name'
+                    label='Customer Address'
+                    className={classes.textField}
+                    value={values.customerAddress.value}
+                    error={values.customerAddress.error}
+                    onChange={handleChange('customerAddress')}
+                    margin='normal'
+                    variant='outlined'
+                    required
+                  />
 
-            <KeyboardDatePicker
-              disableToolbar
-              variant='inline'
-              format='MM/dd/yyyy'
-              margin='normal'
-              id='date-picker-inline'
-              label='Delivery Date'
-              error={values.deliveryDate.error}
-              value={values.deliveryDate.value}
-              onChange={(date) => updateDate(date, 'deliveryDate')}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
+                  <TextField
+                    id='outlined-name'
+                    label='Customer Contact Number'
+                    className={classes.textField}
+                    value={values.customerNumber.value}
+                    error={values.customerNumber.error}
+                    onChange={handleChange('customerNumber')}
+                    margin='normal'
+                    variant='outlined'
+                    required
+                  />
 
-            {/* <TextField
-              id='outlined-number'
-              label='Status'
-              value={values.Status.value}
-              error={values.Status.error}
-              onChange={handleChange('Status')}
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              margin='normal'
-              variant='outlined'
-              required
-            /> */}
+                  <TextField
+                    id='outlined-number'
+                    label='Price'
+                    value={inventory.Price}
+                    disabled
+                    onChange={handleChange('Price')}
+                    type='number'
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    margin='normal'
+                    variant='outlined'
+                    required
+                  />
+                </div>
+              );
+            })}
           </form>
 
           <Button color='primary' onClick={onClose}>
