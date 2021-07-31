@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import IconButton from '@material-ui/core/IconButton';
+import {objToFormData} from '@crema/utility/Utils';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -65,7 +66,7 @@ export default function TransitionsModal({
     },
   });
 
-  const [image, setImage] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
   React.useEffect(() => {
     if (objOnUpdating) {
@@ -132,7 +133,6 @@ export default function TransitionsModal({
 
   const objValues = () => {
     let res = {};
-
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
         const element = values[key];
@@ -150,15 +150,21 @@ export default function TransitionsModal({
   const onSubmitHandler = async () => {
     const isValidated = await validateFields();
     if (isValidated) {
-      const obj = objValues();
-
-      onSubmit(!!objOnUpdating, obj);
+      if (!objOnUpdating) {
+        let obj = objValues();
+        let _obj = objToFormData(obj);
+        _obj.append('photo', photo);
+        onSubmit(!!objOnUpdating, _obj);
+      } else {
+        let obj = objValues();
+        onSubmit(!!objOnUpdating, obj);
+      }
     }
   };
 
   const handleUpload = () => {
     console.log(fileInput.current.files[0]);
-    setImage(fileInput.current.files[0]);
+    setPhoto(fileInput.current.files[0]);
   };
 
   const handleDelete = () => {
@@ -251,19 +257,39 @@ export default function TransitionsModal({
               variant='outlined'
               required
             />
-            <input
-              accept='image/*'
-              id='contained-button-file'
-              type='file'
-              style={{display: 'none'}}
-              ref={fileInput}
-              onChange={handleUpload}
-            />
-            <label htmlFor='contained-button-file'>
-              <Button variant='contained' color='primary' component='span'>
-                Upload
-              </Button>
-            </label>
+            {objOnUpdating &&
+              (objOnUpdating.photo ? (
+                <div style={{textAlign: 'center', width: '200px'}}>
+                  <img
+                    src={`${process.env.REACT_APP_SERVER_URL}/${objOnUpdating.photo}`}
+                  />
+                </div>
+              ) : (
+                <p style={{margin: '1em'}}>Photo: None</p>
+              ))}
+            {objOnUpdating ? null : (
+              <>
+                <input
+                  accept='image/*'
+                  id='contained-button-file'
+                  type='file'
+                  style={{display: 'none'}}
+                  ref={fileInput}
+                  onChange={handleUpload}
+                  name='photo'
+                />
+                {photo ? (
+                  <p style={{margin: '1em'}}>
+                    File : <span>photo.name</span>
+                  </p>
+                ) : null}
+                <label htmlFor='contained-button-file'>
+                  <Button variant='contained' color='primary' component='span'>
+                    Upload
+                  </Button>
+                </label>
+              </>
+            )}
           </form>
 
           <Button color='primary' onClick={onClose}>

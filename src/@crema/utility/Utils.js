@@ -137,3 +137,18 @@ export const checkPermission = (routeAuth, userRole) => {
   }
   return routeAuth.indexOf(userRole) >= 0;
 };
+
+export const objToFormData = (obj) => {
+  let formData = new FormData();
+  Object.keys(obj).map((key) => {
+    // if (typeof obj[key] === "object" && Object.keys(obj[key]).length > 1) {
+    if (typeof obj[key] === 'object' && obj[key].length > 0) {
+      for (const key2 of Object.keys(obj[key])) {
+        formData.append(key, obj[key][key2]);
+      }
+    } else {
+      formData.append(key, obj[key]);
+    }
+  });
+  return formData;
+};

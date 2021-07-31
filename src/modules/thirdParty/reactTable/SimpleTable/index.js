@@ -20,6 +20,16 @@ class SimpleTable extends React.Component {
     );
   };
 
+  renderPhoto = (entry) => {
+    return entry.photo ? (
+      <div style={{textAlign: 'center', width: '100%'}}>
+        <img src={`${process.env.REACT_APP_SERVER_URL}/${entry.photo}`} />
+      </div>
+    ) : (
+      <div>None</div>
+    );
+  };
+
   render() {
     return (
       <ReactTable
@@ -28,6 +38,10 @@ class SimpleTable extends React.Component {
           {
             Header: 'Product',
             columns: [
+              {
+                Header: 'Photo',
+                Cell: (tableContent) => this.renderPhoto(tableContent.original),
+              },
               {
                 Header: 'Item No.',
                 accessor: 'itemNo',
