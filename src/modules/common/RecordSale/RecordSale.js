@@ -36,30 +36,17 @@ const useStyles = makeStyles((theme) => ({
 export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
   const {data} = useSelector((state) => state.inventory);
   const [checked, setChecked] = useState([]);
+  const [inventories, setInventories] = useState([]);
 
   const handleCheckChange = (position) => {
-    const updatedCheckedState = checked.map((item, index) =>
-      index === position ? !item : item,
-    );
+    let _inventories = [...inventories];
 
-    console.log(updatedCheckedState, 'updatedCheckedState');
+    _inventories[position].isChecked = !_inventories[position].isChecked;
 
-    setChecked(updatedCheckedState);
-
-    // const totalPrice = updatedCheckedState.reduce(
-    //   (sum, currentState, index) => {
-    //     if (currentState === true) {
-    //       return sum + toppings[index].price;
-    //     }
-    //     return sum;
-    //   },
-    //   0
-    // );
-
-    // setTotal(totalPrice);
+    console.log(_inventories);
+    setInventories(_inventories);
   };
 
-  console.log(data, 'data');
   const classes = useStyles();
   const [values, setValues] = React.useState({
     productName: {
@@ -112,9 +99,12 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
   }, [objOnUpdating]);
 
   useEffect(() => {
-    console.log(data, 'data');
-
     setChecked(new Array(data.length).fill(false));
+    let newData = [];
+    data.map((item) => {
+      newData.push({...item, isChecked: false});
+    });
+    setInventories(newData);
   }, [data]);
 
   const handleChange = (name) => (event) => {
@@ -212,15 +202,14 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
         <div className={classes.paper}>
           <h1>Record A Sale</h1>
           <form className={classes.container} noValidate autoComplete='off'>
-            {data.map((inventory, index) => {
+            {inventories.map((inventory, index) => {
               return (
                 <div key={index}>
                   <Checkbox
-                    checked={checked[index]}
+                    checked={inventories[index].isChecked}
                     onChange={() => handleCheckChange(index)}
                     inputProps={{'aria-label': 'primary checkbox'}}
                   />
-
                   <TextField
                     id='outlined-name'
                     label='Product Name'
@@ -242,7 +231,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     onChange={handleChange('customerName')}
                     margin='normal'
                     variant='outlined'
-                    required
+                    disabled={!inventories[index].isChecked}
                   />
                   <TextField
                     id='outlined-name'
@@ -253,7 +242,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     onChange={handleChange('customerAddress')}
                     margin='normal'
                     variant='outlined'
-                    required
+                    disabled={!inventories[index].isChecked}
                   />
 
                   <TextField
@@ -265,7 +254,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     onChange={handleChange('customerNumber')}
                     margin='normal'
                     variant='outlined'
-                    required
+                    disabled={!inventories[index].isChecked}
                   />
 
                   <TextField
