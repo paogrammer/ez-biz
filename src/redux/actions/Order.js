@@ -4,7 +4,7 @@ import moment from 'moment';
 import {getDashboardAnalyticsData} from './Dashboard';
 import {toast} from 'react-toastify';
 
-const {GET_ORDERS, ADD_ORDER, UPDATE_ORDER} = ORDERS_ACTION_TYPES;
+const {GET_ORDERS, ADD_ORDER, UPDATE_ORDER, DELETE_ORDER} = ORDERS_ACTION_TYPES;
 
 export const getOrdersData = () => async (dispatch) => {
   try {
@@ -52,5 +52,21 @@ export const updateOrder = (body) => async (dispatch) => {
     dispatch(getDashboardAnalyticsData());
   } catch (error) {
     dispatch({type: UPDATE_ORDER.IS_ERROR, error: error.message});
+  }
+};
+
+export const deleteOrder = (body) => async (dispatch) => {
+  try {
+    dispatch({type: DELETE_ORDER.IS_FETCHING});
+
+    const {data} = await jwtAxios.delete(`/order?orderID=${body._id}`);
+
+    dispatch({
+      type: DELETE_ORDER.IS_FETCHED,
+      order: data.order,
+    });
+    dispatch(getDashboardAnalyticsData());
+  } catch (error) {
+    dispatch({type: DELETE_ORDER.IS_ERROR, error: error.message});
   }
 };

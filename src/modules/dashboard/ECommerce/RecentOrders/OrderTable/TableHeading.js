@@ -27,7 +27,6 @@ const TableHeading = (props) => {
       <TableCell>Order ID</TableCell>
       <TableCell>Product - Qty</TableCell>
       <TableCell>Customer</TableCell>
-      <TableCell>Delivery Date</TableCell>
       <TableCell>Purchase Date</TableCell>
       <TableCell>Price</TableCell>
       {/* <TableCell>Status</TableCell> */}

@@ -34,16 +34,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
+export default function RecordSale({
+  onSubmit,
+  onClose,
+  isOpen,
+  objOnUpdating,
+  onDeleteSale,
+}) {
+  console.log(objOnUpdating);
   const {data} = useSelector((state) => state.inventory);
   const [checked, setChecked] = useState([]);
   const [inventories, setInventories] = useState([]);
   const [values, setValues] = React.useState({
-    itemNo: {
-      error: false,
-      value: '',
-    },
-    itemName: {
+    productName: {
       error: false,
       value: '',
     },
@@ -123,8 +126,65 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
     setInventories(_inventories);
   };
 
-  const onSubmitHandler = () => {
-    onSubmit(inventories);
+  const validateFields = async () => {
+    for (const key in values) {
+      if (Object.hasOwnProperty.call(values, key)) {
+        const element = values[key];
+        if (!`${element.value}`.length) {
+          setValues((prevSate) => {
+            return {
+              ...prevSate,
+              [key]: {
+                ...element,
+                error: true,
+              },
+            };
+          });
+        }
+      }
+    }
+
+    let isValidated = false;
+    for (const key in values) {
+      if (Object.hasOwnProperty.call(values, key)) {
+        const element = values[key];
+        if (!`${element.value}`.length) {
+          isValidated = false;
+          return isValidated;
+        }
+      }
+    }
+    isValidated = true;
+    return isValidated;
+  };
+
+  const objValues = () => {
+    let res = {};
+    for (const key in values) {
+      if (Object.hasOwnProperty.call(values, key)) {
+        const element = values[key];
+
+        res = {
+          ...res,
+          [key]: element.value,
+        };
+      }
+    }
+
+    return res;
+  };
+
+  const onSubmitHandler = async () => {
+    if (!objOnUpdating) {
+      onSubmit(inventories);
+    } else {
+      const isValidated = await validateFields();
+      console.log(isValidated);
+      if (isValidated) {
+        let obj = objValues();
+        onSubmit(!!objOnUpdating, obj);
+      }
+    }
   };
 
   return (
@@ -299,8 +359,8 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                   id='outlined-name'
                   label='Product Name'
                   className={classes.textField}
-                  value={values.itemName.value}
-                  error={values.itemName.error}
+                  value={values.productName.value}
+                  error={values.productName.error}
                   disabled
                   onChange={handleChangeUpdate('productName')}
                   disabled
@@ -388,6 +448,11 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
           <Button color='primary' onClick={onSubmitHandler}>
             {!objOnUpdating ? 'Submit' : 'Update'}
           </Button>
+          {objOnUpdating && (
+            <Button color='primary' onClick={() => onDeleteSale(objOnUpdating)}>
+              Delete
+            </Button>
+          )}
         </div>
       </Fade>
     </Modal>

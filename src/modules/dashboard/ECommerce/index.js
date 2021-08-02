@@ -5,6 +5,7 @@ import {
   getOrdersData,
   getDashboardAnalyticsData,
   updateOrder,
+  deleteOrder,
 } from '../../../redux/actions';
 import InfoView from '../../../@crema/core/InfoView';
 import {Box, Grid} from '@material-ui/core';
@@ -81,8 +82,15 @@ const ECommerce = () => {
   };
 
   const submitRecordSaleHandler = (isUpdating, obj) => {
-    dispatch(updateOrder(obj));
+    console.log(obj, 'obj update');
+    if (isUpdating) {
+      dispatch(updateOrder(obj));
+    }
+    recordSaleCloseHandler();
+  };
 
+  const onDeleteSale = (obj) => {
+    dispatch(deleteOrder(obj));
     recordSaleCloseHandler();
   };
 
@@ -135,6 +143,7 @@ const ECommerce = () => {
                   onClose={recordSaleCloseHandler}
                   onSubmit={submitRecordSaleHandler}
                   objOnUpdating={saleObjOnUpdating}
+                  onDeleteSale={onDeleteSale}
                 />
               )}
 
