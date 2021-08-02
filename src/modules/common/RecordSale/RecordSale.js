@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import {useSelector} from 'react-redux';
+import {FormatColorResetOutlined} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     width: '98%',
     overflowY: 'scroll',
-    maxHeight: '100%',
+    maxHeight: '80%',
   },
   container: {
     display: 'flex',
@@ -48,26 +49,6 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
 
   const classes = useStyles();
 
-  // React.useEffect(() => {
-  //   if (objOnUpdating) {
-  //     for (const key in objOnUpdating) {
-  //       if (Object.hasOwnProperty.call(objOnUpdating, key)) {
-  //         const element = objOnUpdating[key];
-
-  //         setValues((prevSate) => {
-  //           return {
-  //             ...prevSate,
-  //             [key]: {
-  //               ...prevSate[key],
-  //               value: element,
-  //             },
-  //           };
-  //         });
-  //       }
-  //     }
-  //   }
-  // }, [objOnUpdating]);
-
   useEffect(() => {
     setChecked(new Array(data.length).fill(false));
     let newData = [];
@@ -84,64 +65,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
     setInventories(_inventories);
   };
 
-  // const validateFields = async () => {
-  //   for (const key in values) {
-  //     if (Object.hasOwnProperty.call(values, key)) {
-  //       const element = values[key];
-  //       if (!element.value || !`${element.value}`.length) {
-  //         setValues((prevSate) => {
-  //           return {
-  //             ...prevSate,
-  //             [key]: {
-  //               ...element,
-  //               error: true,
-  //             },
-  //           };
-  //         });
-  //       }
-  //     }
-  //   }
-
-  //   let isValidated = false;
-  //   for (const key in values) {
-  //     if (Object.hasOwnProperty.call(values, key)) {
-  //       const element = values[key];
-  //       if (!`${element.value}`.length) {
-  //         isValidated = false;
-
-  //         return isValidated;
-  //       }
-  //     }
-  //   }
-  //   isValidated = true;
-  //   return isValidated;
-  // };
-
-  // const objValues = () => {
-  //   let res = {};
-
-  //   for (const key in values) {
-  //     if (Object.hasOwnProperty.call(values, key)) {
-  //       const element = values[key];
-
-  //       res = {
-  //         ...res,
-  //         [key]: element.value,
-  //       };
-  //     }
-  //   }
-
-  //   return res;
-  // };
-
-  const onSubmitHandler = async () => {
-    // const isValidated = await validateFields();
-    // const obj = objValues();
-    // onSubmit(!!objOnUpdating, obj);
-    // if (isValidated) {
-    // }
-
-    // add validator later
+  const onSubmitHandler = () => {
     onSubmit(inventories);
   };
 
@@ -163,12 +87,39 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
           <form className={classes.container} noValidate autoComplete='off'>
             {inventories.map((inventory, index) => {
               return (
-                <div key={index}>
+                <div
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    margin: '1em 0',
+                  }}>
                   <Checkbox
                     checked={inventories[index].isChecked}
                     onChange={() => handleCheckChange(index)}
                     inputProps={{'aria-label': 'primary checkbox'}}
                   />
+                  {inventory.photo ? (
+                    <img
+                      src={`${process.env.REACT_APP_SERVER_URL}/${inventory.photo}`}
+                      style={{
+                        textAlign: 'center',
+                        width: '100px',
+                        height: '100px',
+                        borderRadius: '50%',
+                        margin: '0 1em',
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={`${process.env.REACT_APP_SERVER_URL}/default.jpeg`}
+                      style={{
+                        textAlign: 'center',
+                        width: '100px',
+                        height: '100px',
+                      }}
+                    />
+                  )}
                   <TextField
                     id='outlined-name'
                     label='Product Name'
@@ -192,6 +143,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     margin='normal'
                     variant='outlined'
                     disabled={!inventories[index].isChecked}
+                    required
                   />
                   <TextField
                     id='outlined-name'
@@ -205,6 +157,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     margin='normal'
                     variant='outlined'
                     disabled={!inventories[index].isChecked}
+                    required
                   />
 
                   <TextField
@@ -219,8 +172,9 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     margin='normal'
                     variant='outlined'
                     disabled={!inventories[index].isChecked}
+                    type={'number'}
+                    required
                   />
-
                   <TextField
                     id='outlined-number'
                     label='Price'
@@ -235,6 +189,22 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     margin='normal'
                     variant='outlined'
                     required
+                  />
+                  <TextField
+                    id='outlined-number'
+                    label='Quantity'
+                    value={inventory.quantity ? inventory.quantity : 0}
+                    onChange={(e) => handleChange(e.target, index)}
+                    type='number'
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    margin='normal'
+                    variant='outlined'
+                    name='quantity'
+                    required
+                    disabled={!inventories[index].isChecked}
                   />
                 </div>
               );

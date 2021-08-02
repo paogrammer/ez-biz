@@ -122,7 +122,6 @@ export default function TransitionsModal({
         const element = values[key];
         if (!`${element.value}`.length) {
           isValidated = false;
-
           return isValidated;
         }
       }

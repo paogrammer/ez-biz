@@ -77,16 +77,8 @@ const ReactTable = () => {
     setRecordASaleModalOpen(true);
   };
 
-  const submitRecordSaleHandler = (isUpdating, obj) => {
-    console.log('..........obj', obj, isUpdating);
-
-    if (isUpdating) {
-      // dispatch(updateNewInventory(obj));
-    } else {
-      dispatch(addNewOrder(obj));
-    }
-
-    recordSaleCloseHandler();
+  const submitRecordSaleHandler = async (inventories) => {
+    dispatch(addNewOrder(inventories, recordSaleCloseHandler));
   };
 
   const recordSaleCloseHandler = () => {

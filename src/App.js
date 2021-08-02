@@ -7,6 +7,8 @@ import LocaleProvider from '@crema/utility/LocaleProvider';
 import CremaThemeProvider from '@crema/utility/CremaThemeProvider';
 import CremaStyleProvider from '@crema/utility/CremaStyleProvider';
 import ContextProvider from '@crema/utility/ContextProvider';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import configureStore, {history} from './redux/store';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,6 +25,7 @@ const App = () => (
               <AuthRoutes>
                 <CssBaseline />
                 <AppLayout />
+                <ToastContainer />
               </AuthRoutes>
             </ConnectedRouter>
           </LocaleProvider>

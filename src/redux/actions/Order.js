@@ -2,6 +2,7 @@ import {ORDERS_ACTION_TYPES} from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth/jwt-api';
 import moment from 'moment';
 import {getDashboardAnalyticsData} from './Dashboard';
+import {toast} from 'react-toastify';
 
 const {GET_ORDERS, ADD_ORDER, UPDATE_ORDER} = ORDERS_ACTION_TYPES;
 
@@ -19,31 +20,24 @@ export const getOrdersData = () => async (dispatch) => {
   }
 };
 
-export const addNewOrder = (inventories) => async (dispatch) => {
-  try {
-    dispatch({type: ADD_ORDER.IS_FETCHING});
-
-    for (const inventory of inventories) {
-      if (inventory.isChecked) {
-        const {data} = await jwtAxios.post('/order', {
-          ...inventory,
-        });
-
-        const {data1} = await jwtAxios.post('/analytics', {
-          ...inventory,
-        });
-
-        dispatch({
-          type: ADD_ORDER.IS_FETCHED,
-          order: data.order,
-          analytics: data1.analytics,
-        });
-      }
+export const addNewOrder =
+  (inventories, recordSaleCloseHandler) => async (dispatch) => {
+    try {
+      dispatch({type: ADD_ORDER.IS_FETCHING});
+      const {data} = await jwtAxios.post('/order', {
+        inventories,
+      });
+      // dispatch({
+      //   type: ADD_ORDER.IS_FETCHED,
+      //   order: data.order,
+      //   // analytics: data1.analytics,
+      // });
+      recordSaleCloseHandler();
+    } catch (error) {
+      toast.error('Please fill up the required fields');
+      dispatch({type: ADD_ORDER.IS_ERROR, error: error});
     }
-  } catch (error) {
-    dispatch({type: ADD_ORDER.IS_ERROR, error: error.message});
-  }
-};
+  };
 
 export const updateOrder = (body) => async (dispatch) => {
   try {
