@@ -43,60 +43,30 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
 
     _inventories[position].isChecked = !_inventories[position].isChecked;
 
-    console.log(_inventories);
     setInventories(_inventories);
   };
 
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    productName: {
-      error: false,
-      value: '',
-    },
-    customerName: {
-      error: false,
-      value: '',
-    },
-    customerNumber: {
-      error: false,
-      value: '',
-    },
-    customerAddress: {
-      error: false,
-      value: '',
-    },
-    purchaseDate: {
-      error: false,
-    },
-    Price: {
-      error: false,
-      value: '',
-    },
-    // Status: {
-    //   error: false,
-    //   value: '',
-    // },
-  });
 
-  React.useEffect(() => {
-    if (objOnUpdating) {
-      for (const key in objOnUpdating) {
-        if (Object.hasOwnProperty.call(objOnUpdating, key)) {
-          const element = objOnUpdating[key];
+  // React.useEffect(() => {
+  //   if (objOnUpdating) {
+  //     for (const key in objOnUpdating) {
+  //       if (Object.hasOwnProperty.call(objOnUpdating, key)) {
+  //         const element = objOnUpdating[key];
 
-          setValues((prevSate) => {
-            return {
-              ...prevSate,
-              [key]: {
-                ...prevSate[key],
-                value: element,
-              },
-            };
-          });
-        }
-      }
-    }
-  }, [objOnUpdating]);
+  //         setValues((prevSate) => {
+  //           return {
+  //             ...prevSate,
+  //             [key]: {
+  //               ...prevSate[key],
+  //               value: element,
+  //             },
+  //           };
+  //         });
+  //       }
+  //     }
+  //   }
+  // }, [objOnUpdating]);
 
   useEffect(() => {
     setChecked(new Array(data.length).fill(false));
@@ -107,83 +77,72 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
     setInventories(newData);
   }, [data]);
 
-  const handleChange = (name) => (event) => {
-    setValues({
-      ...values,
-      [name]: {
-        error: false,
-        value: event.target.value,
-      },
-    });
+  const handleChange = (e, index) => {
+    const {name, value} = e;
+    let _inventories = [...inventories];
+    _inventories[index][name] = value;
+    setInventories(_inventories);
   };
 
-  const updateDate = (date, name) => {
-    setValues({
-      ...values,
-      [name]: {
-        error: false,
-        value: date,
-      },
-    });
-  };
+  // const validateFields = async () => {
+  //   for (const key in values) {
+  //     if (Object.hasOwnProperty.call(values, key)) {
+  //       const element = values[key];
+  //       if (!element.value || !`${element.value}`.length) {
+  //         setValues((prevSate) => {
+  //           return {
+  //             ...prevSate,
+  //             [key]: {
+  //               ...element,
+  //               error: true,
+  //             },
+  //           };
+  //         });
+  //       }
+  //     }
+  //   }
 
-  const validateFields = async () => {
-    for (const key in values) {
-      if (Object.hasOwnProperty.call(values, key)) {
-        const element = values[key];
-        if (!element.value || !`${element.value}`.length) {
-          setValues((prevSate) => {
-            return {
-              ...prevSate,
-              [key]: {
-                ...element,
-                error: true,
-              },
-            };
-          });
-        }
-      }
-    }
+  //   let isValidated = false;
+  //   for (const key in values) {
+  //     if (Object.hasOwnProperty.call(values, key)) {
+  //       const element = values[key];
+  //       if (!`${element.value}`.length) {
+  //         isValidated = false;
 
-    let isValidated = false;
-    for (const key in values) {
-      if (Object.hasOwnProperty.call(values, key)) {
-        const element = values[key];
-        if (!`${element.value}`.length) {
-          isValidated = false;
+  //         return isValidated;
+  //       }
+  //     }
+  //   }
+  //   isValidated = true;
+  //   return isValidated;
+  // };
 
-          return isValidated;
-        }
-      }
-    }
-    isValidated = true;
-    return isValidated;
-  };
+  // const objValues = () => {
+  //   let res = {};
 
-  const objValues = () => {
-    let res = {};
+  //   for (const key in values) {
+  //     if (Object.hasOwnProperty.call(values, key)) {
+  //       const element = values[key];
 
-    for (const key in values) {
-      if (Object.hasOwnProperty.call(values, key)) {
-        const element = values[key];
+  //       res = {
+  //         ...res,
+  //         [key]: element.value,
+  //       };
+  //     }
+  //   }
 
-        res = {
-          ...res,
-          [key]: element.value,
-        };
-      }
-    }
-
-    return res;
-  };
+  //   return res;
+  // };
 
   const onSubmitHandler = async () => {
-    const isValidated = await validateFields();
-    if (isValidated) {
-      const obj = objValues();
+    // const isValidated = await validateFields();
+    // const obj = objValues();
+    // onSubmit(!!objOnUpdating, obj);
+    // if (isValidated) {
+    // }
 
-      onSubmit(!!objOnUpdating, obj);
-    }
+    // add validator later
+    onSubmit(inventories);
   };
 
   return (
@@ -216,7 +175,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     className={classes.textField}
                     value={inventory.itemName}
                     disabled
-                    onChange={handleChange('productName')}
+                    // onChange={handleChange('productName')}
                     margin='normal'
                     variant='outlined'
                     required
@@ -226,9 +185,10 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     id='outlined-name'
                     label='Customer Name'
                     className={classes.textField}
-                    value={values.customerName.value}
-                    error={values.customerName.error}
-                    onChange={handleChange('customerName')}
+                    value={inventory.customerName ? inventory.customerName : ''}
+                    name='customerName'
+                    onChange={(e) => handleChange(e.target, index)}
+                    // onChange={handleChange('customerName', index)}
                     margin='normal'
                     variant='outlined'
                     disabled={!inventories[index].isChecked}
@@ -237,9 +197,11 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     id='outlined-name'
                     label='Customer Address'
                     className={classes.textField}
-                    value={values.customerAddress.value}
-                    error={values.customerAddress.error}
-                    onChange={handleChange('customerAddress')}
+                    value={
+                      inventory.customerAddress ? inventory.customerAddress : ''
+                    }
+                    onChange={(e) => handleChange(e.target, index)}
+                    name='customerAddress'
                     margin='normal'
                     variant='outlined'
                     disabled={!inventories[index].isChecked}
@@ -249,9 +211,11 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     id='outlined-name'
                     label='Customer Contact Number'
                     className={classes.textField}
-                    value={values.customerNumber.value}
-                    error={values.customerNumber.error}
-                    onChange={handleChange('customerNumber')}
+                    value={
+                      inventory.customerNumber ? inventory.customerNumber : ''
+                    }
+                    onChange={(e) => handleChange(e.target, index)}
+                    name='customerNumber'
                     margin='normal'
                     variant='outlined'
                     disabled={!inventories[index].isChecked}
@@ -262,7 +226,7 @@ export default function RecordSale({onSubmit, onClose, isOpen, objOnUpdating}) {
                     label='Price'
                     value={inventory.Price}
                     disabled
-                    onChange={handleChange('Price')}
+                    // onChange={handleChange('Price')}
                     type='number'
                     className={classes.textField}
                     InputLabelProps={{

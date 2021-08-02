@@ -19,24 +19,27 @@ export const getOrdersData = () => async (dispatch) => {
   }
 };
 
-export const addNewOrder = (body) => async (dispatch) => {
+export const addNewOrder = (inventories) => async (dispatch) => {
   try {
     dispatch({type: ADD_ORDER.IS_FETCHING});
 
-    const {data} = await jwtAxios.post('/order', {
-      ...body,
-      deliveryDate: moment(body.deliveryDate).utc(),
-    });
+    for (const inventory of inventories) {
+      if (inventory.isChecked) {
+        const {data} = await jwtAxios.post('/order', {
+          ...inventory,
+        });
 
-    const {data1} = await jwtAxios.post('/analytics', {
-      ...body,
-    });
+        const {data1} = await jwtAxios.post('/analytics', {
+          ...inventory,
+        });
 
-    dispatch({
-      type: ADD_ORDER.IS_FETCHED,
-      order: data.order,
-      analytics: data1.analytics,
-    });
+        dispatch({
+          type: ADD_ORDER.IS_FETCHED,
+          order: data.order,
+          analytics: data1.analytics,
+        });
+      }
+    }
   } catch (error) {
     dispatch({type: ADD_ORDER.IS_ERROR, error: error.message});
   }
