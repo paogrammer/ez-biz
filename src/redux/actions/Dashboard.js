@@ -199,11 +199,13 @@ export const getDashboardAnalyticsData = () => async (dispatch) => {
   try {
     dispatch({type: DASHBOARD_ACTION_TYPES.IS_FETCHING});
 
-    const {data} = await jwtAxios.get('/analytics');
+    const {data} = await jwtAxios.get('/dashboard');
+
+    console.log(data, 'data');
 
     dispatch({
       type: DASHBOARD_ACTION_TYPES.IS_FETCHED,
-      analytics: data.analytics,
+      payload: data.dashboard,
     });
   } catch (error) {
     dispatch({type: DASHBOARD_ACTION_TYPES.IS_ERROR, error: error.message});

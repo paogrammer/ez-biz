@@ -20,6 +20,7 @@ const initialState = {
   healthCare: null,
   academyData: null,
   revenueResults: null,
+  dashboard: null,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -75,7 +76,7 @@ const dashboardReducer = (state = initialState, action) => {
     case DASHBOARD_ACTION_TYPES.IS_FETCHED:
       return {
         ...state,
-        ...action.dashboard,
+        dashboard: action.payload,
       };
 
     default:

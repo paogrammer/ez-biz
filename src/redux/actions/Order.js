@@ -65,7 +65,7 @@ export const deleteOrder = (body) => async (dispatch) => {
       type: DELETE_ORDER.IS_FETCHED,
       order: data.order,
     });
-    dispatch(getDashboardAnalyticsData());
+    dispatch(getOrdersData());
   } catch (error) {
     dispatch({type: DELETE_ORDER.IS_ERROR, error: error.message});
   }

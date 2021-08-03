@@ -41,7 +41,6 @@ export default function RecordSale({
   objOnUpdating,
   onDeleteSale,
 }) {
-  console.log(objOnUpdating);
   const {data} = useSelector((state) => state.inventory);
   const [checked, setChecked] = useState([]);
   const [inventories, setInventories] = useState([]);
@@ -334,27 +333,6 @@ export default function RecordSale({
               })}
             {objOnUpdating && (
               <div>
-                {objOnUpdating.photo ? (
-                  <img
-                    src={`${process.env.REACT_APP_SERVER_URL}/${objOnUpdating.photo}`}
-                    style={{
-                      textAlign: 'center',
-                      width: '100px',
-                      height: '100px',
-                      borderRadius: '50%',
-                      margin: '0 1em',
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={`${process.env.REACT_APP_SERVER_URL}/default.jpeg`}
-                    style={{
-                      textAlign: 'center',
-                      width: '100px',
-                      height: '100px',
-                    }}
-                  />
-                )}
                 <TextField
                   id='outlined-name'
                   label='Product Name'

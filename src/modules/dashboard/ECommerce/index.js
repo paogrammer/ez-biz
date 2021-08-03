@@ -67,6 +67,7 @@ const ECommerce = () => {
   const ecommerceData = useSelector(({dashboard}) => dashboard.ecommerceData);
   const revenue = useSelector(({dashboard}) => dashboard.revenue);
   const ordersCount = useSelector(({dashboard}) => dashboard.ordersCount);
+  const analytics = useSelector(({dashboard}) => dashboard.dashboard);
 
   const ordersData = useSelector(({orders}) => orders.data);
 
@@ -94,6 +95,8 @@ const ECommerce = () => {
     recordSaleCloseHandler();
   };
 
+  console.log(analytics, 'dashboard');
+
   return (
     <>
       {ecommerceData ? (
@@ -102,22 +105,31 @@ const ECommerce = () => {
             <GridContainer>
               <Grid item xs={12} sm={6} md={3}>
                 <SalesState
-                  state={{...revenueResults[0], value: ordersCount || 0}}
+                  state={{
+                    ...revenueResults[0],
+                    value: analytics?.totalSale || 0,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <SalesState
-                  state={{...revenueResults[1], value: revenue || 0}}
+                  state={{...revenueResults[1], value: analytics?.revenue || 0}}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <SalesState
-                  state={{...revenueResults[2], value: revenue || 0}}
+                  state={{
+                    ...revenueResults[2],
+                    value: analytics?.totalSaleLastSevenDays || 0,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <SalesState
-                  state={{...revenueResults[3], value: revenue || 0}}
+                  state={{
+                    ...revenueResults[3],
+                    value: analytics?.totalSaleLastThirtyDays || 0,
+                  }}
                 />
               </Grid>
 

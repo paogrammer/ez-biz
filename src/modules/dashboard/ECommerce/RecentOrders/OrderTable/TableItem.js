@@ -31,7 +31,7 @@ const TableItem = ({data, openModelHandler}) => {
         <Box className={classes.anchar}>{data._id}</Box>
       </TableCell>
       <TableCell align='left' className={classes.tableCell}>
-        {data.productName}
+        {data.productName} - {data.quantity}
       </TableCell>
       <TableCell align='left' className={classes.tableCell}>
         {data.customerName}
@@ -40,7 +40,7 @@ const TableItem = ({data, openModelHandler}) => {
         {moment(data.purchaseDate).format('YYYY-MM-DD')}
       </TableCell>
       <TableCell align='left' className={classes.tableCell}>
-        {data.Price}
+        {data.Price * data.quantity}
       </TableCell>
       {/* <TableCell align='left' className={classes.tableCell}>
         <Box
