@@ -222,9 +222,8 @@ export default function RecordSale({
                         src={`${process.env.REACT_APP_SERVER_URL}/${inventory.photo}`}
                         style={{
                           textAlign: 'center',
-                          width: '100px',
-                          height: '100px',
-                          borderRadius: '50%',
+                          width: '90px',
+                          height: '90px',
                           margin: '0 1em',
                         }}
                       />

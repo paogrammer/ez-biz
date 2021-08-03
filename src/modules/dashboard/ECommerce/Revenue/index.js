@@ -5,7 +5,7 @@ import {Box} from '@material-ui/core';
 import {Fonts} from '../../../../shared/constants/AppEnums';
 import AppCircularProgress from '../../../../@crema/core/AppCircularProgress';
 
-const Revenue = () => {
+const Revenue = ({analytics}) => {
   const {messages} = useIntl();
 
   return (
@@ -13,7 +13,7 @@ const Revenue = () => {
       <Box mb={6} py={5} px={{xl: 10}}>
         <AppCircularProgress
           activeColor='#0A8FDC'
-          value={80}
+          value={(analytics?.revenue / analytics?.totalSale) * 100}
           hidePercentage
           centerNode={
             <Box>
@@ -26,7 +26,7 @@ const Revenue = () => {
                   color='text.primary'
                   fontSize={18}
                   fontWeight={Fonts.MEDIUM}>
-                  600
+                  {analytics?.totalSale}
                 </Box>
               </Box>
               <Box component='p' ml={2} fontSize={14} color='text.secondary'>
@@ -37,7 +37,7 @@ const Revenue = () => {
           thickness={2}
         />
       </Box>
-      <Box display='flex' justifyContent='space-around'>
+      {/*<Box display='flex' justifyContent='space-around'>
         <Box>
           <Box fontSize={18} mb={0.5} fontWeight={Fonts.BOLD}>
             $
@@ -50,7 +50,7 @@ const Revenue = () => {
           </Box>
           <Box color='text.secondary'>Current</Box>
         </Box>
-      </Box>
+        </Box>*/}
     </AppCard>
   );
 };

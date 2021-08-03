@@ -166,7 +166,7 @@ const ECommerce = () => {
                 />
               </Grid>
               <Grid item xs={12} md={3}>
-                <Revenue />
+                <Revenue analytics={analytics} />
               </Grid>
 
               {/* <Grid item xs={12} md={6}>
@@ -182,9 +182,7 @@ const ECommerce = () => {
                 <NewCustomers newCustomers={ecommerceData.newCustomers} />
               </Grid> */}
               <Grid item xs={12} md={6}>
-                <PopularProducts
-                  popularProducts={ecommerceData.popularProducts}
-                />
+                <PopularProducts popularProducts={analytics?.topProducts} />
               </Grid>
 
               {/* <Grid item xs={12} md={9}>
