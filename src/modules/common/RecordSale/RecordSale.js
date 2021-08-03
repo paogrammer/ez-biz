@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import {useSelector} from 'react-redux';
 import {FormatColorResetOutlined} from '@material-ui/icons';
+import {toast} from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -175,13 +176,27 @@ export default function RecordSale({
 
   const onSubmitHandler = async () => {
     if (!objOnUpdating) {
-      onSubmit(inventories);
+      const checkedItems = inventories.filter(
+        (item) => item.isChecked === true,
+      );
+      const zeroStock = checkedItems.filter(
+        (item) => item.stockAmount < item.quantity,
+      );
+      if (zeroStock.length) {
+        toast.error('Not Enough Stocks');
+      } else {
+        onSubmit(inventories);
+      }
     } else {
       const isValidated = await validateFields();
-      console.log(isValidated);
-      if (isValidated) {
-        let obj = objValues();
-        onSubmit(!!objOnUpdating, obj);
+
+      if (objOnUpdating.stockAmount) {
+        if (isValidated) {
+          let obj = objValues();
+          onSubmit(!!objOnUpdating, obj);
+        }
+      } else {
+        toast.error('No Stocks Left');
       }
     }
   };
