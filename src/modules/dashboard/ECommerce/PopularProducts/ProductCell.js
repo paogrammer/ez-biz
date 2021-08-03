@@ -15,7 +15,7 @@ const ProductCell = ({data}) => {
   const classes = useStyles();
   return (
     <Box
-      key={data._id}
+      key={data?._id}
       display='flex'
       alignItems='center'
       py={2}
@@ -26,7 +26,7 @@ const ProductCell = ({data}) => {
           className={classes.avatarSize}
           variant='rounded'
           alt=''
-          src={`${process.env.REACT_APP_SERVER_URL}/${data.photo}`}
+          src={`${process.env.REACT_APP_SERVER_URL}/${data?.photo}`}
         />
       </Box>
 
@@ -37,13 +37,13 @@ const ProductCell = ({data}) => {
           fontWeight={Fonts.MEDIUM}
           mb={0.5}
           fontSize={14}>
-          {data.itemName}
+          {data?.itemName}
         </Box>
         <Box component='p' fontSize={14} color='text.secondary' mb={1}>
-          {data.description}
+          {data?.description}
         </Box>
         <Box component='p' fontSize={14} fontWeight={Fonts.MEDIUM}>
-          ${data.Price}
+          ${data?.Price}
           {/*} <Box
             component='span'
             fontSize={14}
