@@ -35,6 +35,7 @@ import {
   addNewOrder,
   deleteInventory,
 } from 'redux/actions';
+import {useHistory} from 'react-router-dom';
 
 const ReactTable = () => {
   const [isInventoryInventoryModalOpen, setInventoryInventoryModalOpen] =
@@ -43,6 +44,7 @@ const ReactTable = () => {
   const [inventoryObjOnUpdating, setInventoryObjOnUpdating] = useState(null);
   const [saleObjOnUpdating, setSaleObjOnUpdating] = useState(null);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const openUpdateInventoryHandler = () => {
     setInventoryInventoryModalOpen(true);
@@ -78,7 +80,15 @@ const ReactTable = () => {
   };
 
   const submitRecordSaleHandler = async (inventories) => {
-    dispatch(addNewOrder(inventories, recordSaleCloseHandler));
+    dispatch(addNewOrder(inventories, recordSaleCloseHandler, toInvoice));
+  };
+
+  const toInvoice = (items) => {
+    console.log(items, 'items');
+    history.push({
+      pathname: '/ecommerce/invoice-1',
+      state: {items: items},
+    });
   };
 
   const recordSaleCloseHandler = () => {

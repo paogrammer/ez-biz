@@ -96,6 +96,8 @@
     "react-swipeable-views": "^0.13.9",
     "react-table": "6.10.3",
     "react-text-mask": "^5.4.3",
+    "react-to-pdf": "0.0.14",
+    "react-to-print": "^2.13.0",
     "react-toastify": "^6.2.0",
     "react-tooltip": "^4.2.7",
     "react-transition-group": "^4.4.1",

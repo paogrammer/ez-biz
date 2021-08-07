@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, makeStyles} from '@material-ui/core';
 import invoiceData from '../../../@crema/services/db/extraPages/invoice/invoiceData';
 import Typography from '@material-ui/core/Typography';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
 import {Fonts} from '../../../shared/constants/AppEnums';
+import moment from 'moment';
+import jwtAxios from '@crema/services/auth/jwt-auth/jwt-api';
 
 const useStyles = makeStyles((theme) => ({
   logoRoot: {
@@ -20,6 +22,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles(props);
+  const {items} = props;
+  const [business, setBusiness] = useState({});
+  const date = new Date();
+
+  const invoiceNumberGenerator = () => {
+    return Math.floor(Math.random() * 100000000);
+  };
+
+  const getUserData = async () => {
+    try {
+      const {data} = await jwtAxios.get(`/users/${items.items[0].userID}`);
+      console.log(data);
+      setBusiness(data.user[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (items?.items) {
+      getUserData();
+    }
+  }, []);
+
   return (
     <Box
       py={{xs: 6, sm: 8, xl: 10}}
@@ -28,18 +54,6 @@ const Header = (props) => {
       display='flex'
       flexDirection={{xs: 'column', lg: 'row'}}
       alignItems={{lg: 'center'}}>
-      <Box
-        mr={{lg: 10}}
-        mb={{xs: 8, lg: 0}}
-        alignSelf={{xs: 'center', lg: 'flex-start'}}
-        display='inline-block'>
-        <img
-          className={classes.logoRoot}
-          alt='logo'
-          src={'/assets/images/logo-icon-large.png'}
-        />
-      </Box>
-
       <Box
         mx={-3}
         color='text.secondary'
@@ -54,16 +68,10 @@ const Header = (props) => {
             mb={1}
             fontWeight={Fonts.BOLD}
             className={classes.textRes}>
-            {invoiceData.company.name}
+            {business.name}
           </Box>
           <Typography component='p' mb={1}>
-            {invoiceData.company.address1}
-          </Typography>
-          <Typography component='p' mb={1}>
-            {invoiceData.company.address2}
-          </Typography>
-          <Typography component='p' mb={1}>
-            Phone: {invoiceData.company.phone}
+            Email: {business.email}
           </Typography>
         </Box>
 
@@ -77,13 +85,10 @@ const Header = (props) => {
             <IntlMessages id='invoice.client' />
           </Box>
           <Typography component='p' mb={1}>
-            {invoiceData.client.name}
+            {items.items[0].customerName}
           </Typography>
           <Typography component='p' mb={1}>
-            {invoiceData.client.phone}
-          </Typography>
-          <Typography component='p' mb={1}>
-            {invoiceData.client.email}
+            {items.items[0].customerNumber}
           </Typography>
         </Box>
 
@@ -100,13 +105,11 @@ const Header = (props) => {
             <IntlMessages id='invoice.invoice' />
           </Box>
           <Typography component='p' mb={1} fontWeight={Fonts.MEDIUM}>
-            <IntlMessages id='invoice.id' />: {invoiceData.invoice.id}
+            <IntlMessages id='invoice.id' />: {invoiceNumberGenerator()}
           </Typography>
           <Typography component='p' mb={1}>
-            <IntlMessages id='invoice.issued' />: {invoiceData.invoice.date}
-          </Typography>
-          <Typography component='p' mb={1} fontWeight={Fonts.MEDIUM}>
-            <IntlMessages id='invoice.dueOn' />: {invoiceData.invoice.dueDate}
+            <IntlMessages id='invoice.issued' />:
+            {moment(date).format('MM/DD/YYYY')}
           </Typography>
         </Box>
       </Box>

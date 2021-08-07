@@ -24,16 +24,18 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.up('lg')]: {
     invoiceTable: {
-      '& > thead > tr > th, & > tbody > tr > th, & > tfoot > tr > th, & > thead > tr > td, & > tbody > tr > td, & > tfoot > tr > td': {
-        padding: 24,
-      },
+      '& > thead > tr > th, & > tbody > tr > th, & > tfoot > tr > th, & > thead > tr > td, & > tbody > tr > td, & > tfoot > tr > td':
+        {
+          padding: 24,
+        },
     },
   },
   [theme.breakpoints.up('xl')]: {
     invoiceTable: {
-      '& > thead > tr > th, & > tbody > tr > th, & > tfoot > tr > th, & > thead > tr > td, & > tbody > tr > td, & > tfoot > tr > td': {
-        padding: 32,
-      },
+      '& > thead > tr > th, & > tbody > tr > th, & > tfoot > tr > th, & > thead > tr > td, & > tbody > tr > td, & > tfoot > tr > td':
+        {
+          padding: 32,
+        },
     },
   },
   textUppercase: {
@@ -49,6 +51,23 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemList = (props) => {
   const classes = useStyles(props);
+  const {items} = props;
+
+  console.log(items.items, 'items in list');
+
+  const getTotal = () => {
+    let grandTotal = 0;
+
+    items.items.map((item) => {
+      if (item.isChecked) {
+        grandTotal =
+          grandTotal + parseFloat(item.quantity) * parseFloat(item.Price);
+      }
+    });
+
+    return grandTotal;
+  };
+
   return (
     <Table className={classes.invoiceTable}>
       <TableHead>
@@ -56,52 +75,15 @@ const ItemList = (props) => {
       </TableHead>
 
       <TableBody>
-        {invoiceData.products.map((product) => {
-          return <TableItem key={product.id} product={product} />;
+        {items.items.map((item) => {
+          if (item.isChecked) {
+            return <TableItem key={item._id} product={item} />;
+          } else {
+            return null;
+          }
         })}
-
         <TableRow>
-          <TableCell colSpan='3' component='th' scope='row'>
-            <Box
-              color='grey.700'
-              className={clsx(classes.textUppercase, classes.textBase)}
-              fontWeight={Fonts.MEDIUM}>
-              <IntlMessages id='invoice.subTotal' />
-            </Box>
-          </TableCell>
-          <TableCell>
-            <Box
-              color='grey.700'
-              className={clsx(classes.textUppercase, classes.textBase)}
-              textAlign='right'
-              fontWeight={Fonts.MEDIUM}>
-              ${invoiceData.subTotal}
-            </Box>
-          </TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell colSpan='3' component='th' scope='row'>
-            <Box
-              color='grey.700'
-              className={clsx(classes.textUppercase, classes.textBase)}
-              fontWeight={Fonts.MEDIUM}>
-              <IntlMessages id='invoice.rebate' />
-            </Box>
-          </TableCell>
-          <TableCell>
-            <Box
-              color='grey.700'
-              className={clsx(classes.textUppercase, classes.textBase)}
-              textAlign='right'
-              fontWeight={Fonts.MEDIUM}>
-              ${invoiceData.rebate}
-            </Box>
-          </TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell colSpan='3' component='th' scope='row'>
+          <TableCell colSpan='4' component='th' scope='row'>
             <Box
               color='grey.700'
               className={clsx(classes.textUppercase, classes.textLg)}
@@ -115,7 +97,7 @@ const ItemList = (props) => {
               className={clsx(classes.textUppercase, classes.textLg)}
               textAlign='right'
               fontWeight={Fonts.MEDIUM}>
-              ${invoiceData.total}
+              ${getTotal()}
             </Box>
           </TableCell>
         </TableRow>

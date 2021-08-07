@@ -27,18 +27,20 @@ const TableItem = (props) => {
     <TableRow>
       <TableCell component='th' scope='row'>
         <Box mb={2} className={clsx(classes.textUppercase, classes.textBase)}>
-          {product.item}
+          {product.itemNo}
         </Box>
-        <Box component='p' color='text.secondary' mb={0}>
-          {product.desc}
+      </TableCell>
+      <TableCell className={classes.alignTop}>
+        <Box mb={2} className={clsx(classes.textUppercase, classes.textBase)}>
+          {product.itemName}
         </Box>
       </TableCell>
       <TableCell className={classes.alignTop}>
         <Box
           mb={2}
-          textAlign='right'
+          textAlign='center'
           className={clsx(classes.textUppercase, classes.textBase)}>
-          {product.type}
+          {product.description}
         </Box>
       </TableCell>
       <TableCell className={classes.alignTop}>
@@ -54,7 +56,7 @@ const TableItem = (props) => {
           mb={2}
           textAlign='right'
           className={clsx(classes.textUppercase, classes.textBase)}>
-          ${product.price}
+          ${product.Price}
         </Box>
       </TableCell>
     </TableRow>

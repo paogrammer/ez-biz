@@ -24,18 +24,26 @@ const TableHeading = (props) => {
           color='grey.700'
           className={clsx(classes.textUppercase, classes.textRes)}
           fontWeight={Fonts.BOLD}>
-          <IntlMessages id='invoice.itemDesc' />
+          <IntlMessages id='invoice.itemNo' />
         </Box>
       </TableCell>
       <TableCell>
         <Box
           color='grey.700'
-          textAlign='right'
           className={clsx(classes.textUppercase, classes.textRes)}
           fontWeight={Fonts.BOLD}>
-          <IntlMessages id='invoice.assignment' />
+          <IntlMessages id='invoice.itemName' />
         </Box>
       </TableCell>
+      <TableCell>
+        <Box
+          color='grey.700'
+          className={clsx(classes.textUppercase, classes.textRes)}
+          fontWeight={Fonts.BOLD}>
+          <IntlMessages id='invoice.itemDesc' />
+        </Box>
+      </TableCell>
+
       <TableCell>
         <Box
           color='grey.700'

@@ -21,7 +21,7 @@ export const getOrdersData = () => async (dispatch) => {
 };
 
 export const addNewOrder =
-  (inventories, recordSaleCloseHandler) => async (dispatch) => {
+  (inventories, recordSaleCloseHandler, toInvoice) => async (dispatch) => {
     try {
       dispatch({type: ADD_ORDER.IS_FETCHING});
       const {data} = await jwtAxios.post('/order', {
@@ -33,6 +33,7 @@ export const addNewOrder =
       //   // analytics: data1.analytics,
       // });
       recordSaleCloseHandler();
+      toInvoice(inventories);
     } catch (error) {
       toast.error('Please fill up the required fields');
       dispatch({type: ADD_ORDER.IS_ERROR, error: error});
