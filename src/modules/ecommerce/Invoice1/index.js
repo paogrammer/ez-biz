@@ -42,19 +42,28 @@ const Invoice1 = (props) => {
         x={0.5}
         y={0.5}
         scale={0.65}>
-        {({toPdf}) => <Button onClick={toPdf}>Generate pdf</Button>}
+        {({toPdf}) => (
+          <Button onClick={toPdf} style={{margin: '1em'}}>
+            Generate pdf
+          </Button>
+        )}
       </ReactToPdf>
 
       <AppAnimate animation='transition.slideUpIn' delay={200}>
         <Box
+          style={{background: '#FFFFFF'}}
           flex={1}
           display='flex'
           flexDirection='column'
           alignItems='center'
           ref={componentRef}>
-          <Box flex={1} maxWidth={900}>
-            <Box pt={{xl: 8}} mb={{xs: 6, lg: 8}} clone>
-              <Card>
+          <Box flex={1} maxWidth={900} style={{background: '#FFFFFF'}}>
+            <Box
+              pt={{xl: 8}}
+              mb={{xs: 6, lg: 8}}
+              clone
+              style={{background: '#FFFFFF'}}>
+              <Card style={{background: '#FFFFFF'}}>
                 <Header items={items} />
                 <AppTableContainer>
                   <ItemList items={items} />

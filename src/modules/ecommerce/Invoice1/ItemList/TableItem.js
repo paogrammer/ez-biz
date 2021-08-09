@@ -16,6 +16,7 @@ const TableItem = (props) => {
     textBase: {
       fontSize: 13,
       fontWeight: Fonts.MEDIUM,
+      color: 'black',
     },
     alignTop: {
       verticalAlign: 'top',
